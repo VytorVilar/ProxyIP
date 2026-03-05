@@ -1,143 +1,45 @@
-// TERMINAL
+// Importar Firebase
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-const terminal=document.getElementById("terminal")
+// Configuração do seu Firebase
+const firebaseConfig = {
+  apiKey: "AIzaSyBcvHd0Kg_hkur0X85pIkkSUljEd4nAROQ",
+  authDomain: "cyber-tracker-b1822.firebaseapp.com",
+  projectId: "cyber-tracker-b1822",
+  storageBucket: "cyber-tracker-b1822.firebasestorage.app",
+  messagingSenderId: "640630013098",
+  appId: "1:640630013098:web:5252369586ab63d5f6a4d3"
+};
 
-const lines=[
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
 
-"Booting cyber system...",
-"Detecting network...",
-"Locating IP address...",
-"Scanning browser environment...",
-"Checking hardware...",
-"Loading geolocation...",
-"Analysis complete ✔"
+// Conectar com banco de dados
+const db = getFirestore(app);
 
-]
+// Função para coletar dados
+async function coletarDados() {
 
-let i=0
+  let ipData = await fetch("https://ipapi.co/json/");
+  ipData = await ipData.json();
 
-function type(){
+  const visitante = {
+    ip: ipData.ip,
+    pais: ipData.country_name,
+    cidade: ipData.city,
+    provedor: ipData.org,
+    navegador: navigator.userAgent,
+    sistema: navigator.platform,
+    idioma: navigator.language,
+    resolucao: screen.width + "x" + screen.height,
+    data: new Date().toString()
+  };
 
-if(i<lines.length){
+  // salvar no Firebase
+  await addDoc(collection(db, "visitas"), visitante);
 
-const div=document.createElement("div")
-
-terminal.appendChild(div)
-
-let j=0
-
-const interval=setInterval(()=>{
-
-div.innerHTML+=lines[i][j]
-
-j++
-
-if(j>=lines[i].length){
-
-clearInterval(interval)
-i++
-
-setTimeout(type,500)
-
+  console.log("Visitante registrado", visitante);
 }
 
-},30)
-
-}
-
-}
-
-type()
-
-
-// IP DATA
-
-fetch("https://ipapi.co/json/")
-.then(res=>res.json())
-.then(data=>{
-
-ip.innerText=data.ip
-city.innerText=data.city
-country.innerText=data.country_name
-isp.innerText=data.org
-
-const map=L.map("map").setView([data.latitude,data.longitude],10)
-
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map)
-
-L.marker([data.latitude,data.longitude]).addTo(map)
-
-})
-
-
-// BROWSER INFO
-
-browser.innerText=navigator.userAgent
-os.innerText=navigator.platform
-lang.innerText=navigator.language
-
-cpu.innerText=navigator.hardwareConcurrency
-ram.innerText=navigator.deviceMemory || "N/A"
-
-
-// CAMERA / MIC
-
-navigator.mediaDevices.enumerateDevices().then(devices=>{
-
-let cam=false
-let mic=false
-
-devices.forEach(device=>{
-
-if(device.kind==="videoinput") cam=true
-if(device.kind==="audioinput") mic=true
-
-})
-
-document.getElementById("cam").innerText=cam
-document.getElementById("mic").innerText=mic
-
-})
-
-
-// MEMORY CHART
-
-const chart=new Chart(
-
-document.getElementById("memChart"),
-
-{
-
-type:"line",
-
-data:{
-labels:[],
-datasets:[{
-label:"JS Memory MB",
-data:[]
-}]
-}
-
-})
-
-setInterval(()=>{
-
-if(performance.memory){
-
-const mem=(performance.memory.usedJSHeapSize/1048576).toFixed(2)
-
-chart.data.labels.push("")
-chart.data.datasets[0].data.push(mem)
-
-if(chart.data.labels.length>20){
-
-chart.data.labels.shift()
-chart.data.datasets[0].data.shift()
-
-}
-
-chart.update()
-
-}
-
-},1000)
+coletarDados();
