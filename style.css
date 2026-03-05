@@ -1,47 +1,35 @@
 body{
-
-background:black;
+background:#000;
 color:#00ff9c;
-font-family:Courier New;
+font-family:monospace;
 margin:0;
+padding:40px;
+text-align:center;
+}
 
+.container{
+max-width:900px;
+margin:auto;
 }
 
 h1{
-
-text-align:center;
-border-bottom:1px solid #00ff9c;
-padding:10px;
-
+font-size:40px;
+margin-bottom:30px;
 }
 
 .grid{
-
 display:grid;
-grid-template-columns:1fr 1fr;
-gap:20px;
-padding:20px;
-
+grid-template-columns:repeat(2,1fr);
+gap:15px;
 }
 
-.panel{
-
+.card{
 border:1px solid #00ff9c;
 padding:15px;
 background:rgba(0,0,0,0.8);
-box-shadow:0 0 10px #00ff9c;
-
 }
 
-#map{
-
-height:300px;
-
-}
-
-#terminal{
-
-height:200px;
-overflow:auto;
-
+#status{
+margin-top:25px;
+font-size:18px;
 }
