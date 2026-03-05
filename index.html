@@ -1,75 +1,95 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
+
 <head>
-
 <meta charset="UTF-8">
-<title>Cyber Intelligence Panel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="stylesheet" href="style.css">
+<title>Cyber Visitor Scanner</title>
 
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
 
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+body{
+background:black;
+color:#00ff9c;
+font-family:monospace;
+margin:0;
+padding:40px;
+text-align:center;
+}
+
+h1{
+font-size:40px;
+margin-bottom:30px;
+}
+
+.container{
+max-width:900px;
+margin:auto;
+}
+
+.card{
+border:1px solid #00ff9c;
+padding:15px;
+margin:10px;
+background:rgba(0,0,0,0.7);
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:10px;
+}
+
+</style>
 
 </head>
 
 <body>
 
-<canvas id="matrix"></canvas>
+<div class="container">
 
-<h1>CYBER INTELLIGENCE SYSTEM</h1>
+<h1>CYBER VISITOR SCANNER</h1>
 
 <div class="grid">
 
-<div class="panel">
-
-<h3>Terminal</h3>
-
-<div id="terminal"></div>
-
+<div class="card">
+IP do visitante
 </div>
 
-<div class="panel">
-
-<h3>Visitor Data</h3>
-
-<div>IP: <span id="ip"></span></div>
-<div>Cidade: <span id="city"></span></div>
-<div>País: <span id="country"></span></div>
-<div>ISP: <span id="isp"></span></div>
-
-<div>Navegador: <span id="browser"></span></div>
-<div>Sistema: <span id="os"></span></div>
-<div>Idioma: <span id="lang"></span></div>
-
-<div>CPU: <span id="cpu"></span></div>
-<div>RAM: <span id="ram"></span></div>
-
-<div>Câmera: <span id="cam"></span></div>
-<div>Microfone: <span id="mic"></span></div>
-
+<div class="card">
+Localização detectada
 </div>
 
-<div class="panel">
-
-<h3>Memory Monitor</h3>
-
-<canvas id="memChart"></canvas>
-
+<div class="card">
+Sistema operacional
 </div>
 
-<div class="panel">
+<div class="card">
+Navegador
+</div>
 
-<h3>Location</h3>
+<div class="card">
+Resolução da tela
+</div>
 
-<div id="map"></div>
+<div class="card">
+Idioma
+</div>
 
+<div class="card">
+Registro enviado para o banco
 </div>
 
 </div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<script src="script.js"></script>
+<p id="status">Analisando visitante...</p>
+
+</div>
+
+<!-- SCRIPT QUE ENVIA OS DADOS PARA O FIREBASE -->
+<script type="module" src="script.js"></script>
 
 </body>
+
 </html>
