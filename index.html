@@ -7,41 +7,7 @@
 
 <title>Cyber Visitor Scanner</title>
 
-<style>
-
-body{
-background:black;
-color:#00ff9c;
-font-family:monospace;
-margin:0;
-padding:40px;
-text-align:center;
-}
-
-h1{
-font-size:40px;
-margin-bottom:30px;
-}
-
-.container{
-max-width:900px;
-margin:auto;
-}
-
-.card{
-border:1px solid #00ff9c;
-padding:15px;
-margin:10px;
-background:rgba(0,0,0,0.7);
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:10px;
-}
-
-</style>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
@@ -53,33 +19,14 @@ gap:10px;
 
 <div class="grid">
 
-<div class="card">
-IP do visitante
-</div>
-
-<div class="card">
-Localização detectada
-</div>
-
-<div class="card">
-Sistema operacional
-</div>
-
-<div class="card">
-Navegador
-</div>
-
-<div class="card">
-Resolução da tela
-</div>
-
-<div class="card">
-Idioma
-</div>
-
-<div class="card">
-Registro enviado para o banco
-</div>
+<div class="card">IP: <span id="ip">...</span></div>
+<div class="card">País: <span id="pais">...</span></div>
+<div class="card">Cidade: <span id="cidade">...</span></div>
+<div class="card">Provedor: <span id="provedor">...</span></div>
+<div class="card">Sistema: <span id="sistema">...</span></div>
+<div class="card">Navegador: <span id="navegador">...</span></div>
+<div class="card">Idioma: <span id="idioma">...</span></div>
+<div class="card">Resolução: <span id="resolucao">...</span></div>
 
 </div>
 
@@ -87,9 +34,7 @@ Registro enviado para o banco
 
 </div>
 
-<!-- SCRIPT QUE ENVIA OS DADOS PARA O FIREBASE -->
 <script type="module" src="script.js"></script>
 
 </body>
-
 </html>
