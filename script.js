@@ -17,7 +17,7 @@ async function registrarVisita(){
 
 try{
 
-let ipData = await fetch("https://ipapi.co/json/");
+let ipData = await fetch("https://ipapi.co/json");
 ipData = await ipData.json();
 
 document.getElementById("ip").textContent = ipData.ip;
@@ -60,3 +60,4 @@ console.error(e);
 }
 
 registrarVisita();
+
