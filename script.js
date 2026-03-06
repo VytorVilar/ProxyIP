@@ -1,49 +1,130 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+import {
+getDatabase,
+ref,
+push,
+onValue
+
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+
 
 const firebaseConfig = {
-  apiKey: "AIzaSyBcvHd0Kg_hkur0X85pIkkSUljEd4nAROQ",
-  authDomain: "cyber-tracker-b1822.firebaseapp.com",
-  projectId: "cyber-tracker-b1822",
-  storageBucket: "cyber-tracker-b1822.firebasestorage.app",
-  messagingSenderId: "640630013098",
-  appId: "1:640630013098:web:5252369586ab63d5f6a4d3"
+
+apiKey: "SUA_API_KEY",
+
+authDomain: "SEU_PROJETO.firebaseapp.com",
+
+databaseURL: "https://SEU_PROJETO-default-rtdb.firebaseio.com",
+
+projectId: "SEU_PROJETO",
+
+storageBucket: "SEU_PROJETO.appspot.com",
+
+messagingSenderId: "XXXX",
+
+appId: "XXXX"
+
 };
 
 const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+
+const db = getDatabase(app);
+
+const terminal = document.getElementById("terminal");
+const tabela = document.getElementById("tabela");
+const online = document.getElementById("online");
+
+
+function log(msg){
+
+terminal.innerHTML += msg + "<br>";
+terminal.scrollTop = terminal.scrollHeight;
+
+}
+
 
 async function registrarVisita(){
 
 try{
 
-let resposta = await fetch("https://ipapi.co/json");
-let ipData = await resposta.json();
+log("Iniciando varredura de rede...");
 
-const visitante = {
-ip: ipData.ip,
-pais: ipData.country_name,
-cidade: ipData.city,
-provedor: ipData.org,
-sistema: navigator.platform,
-navegador: navigator.userAgent,
-idioma: navigator.language,
-resolucao: screen.width + "x" + screen.height,
-url: window.location.href,
-data: serverTimestamp()
+const res = await fetch("https://ipapi.co/json/");
+
+const dados = await res.json();
+
+log("IP detectado: " + dados.ip);
+log("Localização: " + dados.city + " / " + dados.country_name);
+
+const visita = {
+
+ip:dados.ip,
+pais:dados.country_name,
+cidade:dados.city,
+navegador:navigator.userAgent,
+sistema:navigator.platform,
+data:new Date().toLocaleString()
+
 };
 
-await addDoc(collection(db,"visitas"), visitante);
+await push(ref(db,"visitas"),visita);
 
-document.getElementById("status").innerText = "Visitante registrado";
+log("Visitante registrado no banco");
 
 }catch(e){
 
+log("Erro ao registrar visitante");
+
 console.error(e);
-document.getElementById("status").innerText = "Erro ao registrar visitante";
 
 }
 
 }
+
+
+function carregarVisitantes(){
+
+const visitasRef = ref(db,"visitas");
+
+onValue(visitasRef,(snapshot)=>{
+
+tabela.innerHTML="";
+
+let contador=0;
+
+snapshot.forEach((child)=>{
+
+contador++;
+
+const v = child.val();
+
+const linha = `
+
+<tr>
+
+<td>${v.ip}</td>
+<td>${v.pais}</td>
+<td>${v.cidade}</td>
+<td>${v.navegador}</td>
+<td>${v.sistema}</td>
+<td>${v.data}</td>
+
+</tr>
+
+`;
+
+tabela.innerHTML += linha;
+
+});
+
+online.innerText = contador;
+
+});
+
+}
+
 
 registrarVisita();
+
+carregarVisitantes();
