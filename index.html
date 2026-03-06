@@ -2,10 +2,9 @@
 <html lang="pt-BR">
 
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cyber Visitor Scanner</title>
+<meta charset="UTF-8">
+<title>Network Access Monitor</title>
 
 <link rel="stylesheet" href="style.css">
 
@@ -13,28 +12,36 @@
 
 <body>
 
-<div class="container">
+<h1>NETWORK ACCESS MONITOR</h1>
 
-<h1>CYBER VISITOR SCANNER</h1>
+<div id="terminal"></div>
 
-<div class="grid">
+<h2>Visitantes detectados</h2>
 
-<div class="card">IP: <span id="ip">...</span></div>
-<div class="card">País: <span id="pais">...</span></div>
-<div class="card">Cidade: <span id="cidade">...</span></div>
-<div class="card">Provedor: <span id="provedor">...</span></div>
-<div class="card">Sistema: <span id="sistema">...</span></div>
-<div class="card">Navegador: <span id="navegador">...</span></div>
-<div class="card">Idioma: <span id="idioma">...</span></div>
-<div class="card">Resolução: <span id="resolucao">...</span></div>
-
+<div class="contador">
+Online agora: <span id="online">0</span>
 </div>
 
-<p id="status">Analisando visitante...</p>
+<table>
 
-</div>
+<thead>
+
+<tr>
+<th>IP</th>
+<th>País</th>
+<th>Cidade</th>
+<th>Navegador</th>
+<th>Sistema</th>
+<th>Data</th>
+</tr>
+
+</thead>
+
+<tbody id="tabela"></tbody>
+
+</table>
 
 <script type="module" src="script.js"></script>
-  
+
 </body>
 </html>
