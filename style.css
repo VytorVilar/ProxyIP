@@ -1,35 +1,54 @@
 body{
-background:#000;
-color:#00ff9c;
-font-family:monospace;
-margin:0;
-padding:40px;
-text-align:center;
-}
 
-.container{
-max-width:900px;
-margin:auto;
+background:black;
+color:#00ff88;
+font-family:monospace;
+padding:20px;
+
 }
 
 h1{
-font-size:40px;
-margin-bottom:30px;
+
+color:#00ff88;
+text-shadow:0 0 10px #00ff88;
+
 }
 
-.grid{
-display:grid;
-grid-template-columns:repeat(2,1fr);
-gap:15px;
-}
+#terminal{
 
-.card{
-border:1px solid #00ff9c;
+background:#020202;
+border:1px solid #00ff88;
 padding:15px;
-background:rgba(0,0,0,0.8);
+height:200px;
+overflow:auto;
+margin-bottom:20px;
+
 }
 
-#status{
-margin-top:25px;
+table{
+
+width:100%;
+border-collapse:collapse;
+
+}
+
+th,td{
+
+border:1px solid #00ff88;
+padding:6px;
+text-align:center;
+
+}
+
+th{
+
+background:#002b1d;
+
+}
+
+.contador{
+
+margin:10px 0;
 font-size:18px;
+
 }
